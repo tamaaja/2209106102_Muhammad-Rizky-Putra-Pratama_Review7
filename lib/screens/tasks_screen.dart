@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:praktikum_state_mngmnt_2023/screens/settings_screen.dart';
 
 import '../model/task.dart';
 import '../widgets/tasks_list.dart';
@@ -48,11 +49,20 @@ class _TasksScreenState extends State<TasksScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 30.0,
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(15.0)),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => SettingsScreen(),
+                      ),
+                    );
+                  },
                   child: Icon(
-                    Icons.list,
+                    Icons.settings,
                     size: 30.0,
                     color: Colors.lightBlueAccent,
                   ),
