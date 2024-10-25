@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:praktikum_state_mngmnt_2023/controller/theme.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -27,17 +29,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           ListTile(
             leading: Icon(
-              isDarkModeActive ? Icons.dark_mode : Icons.light_mode,
+              Provider.of<ThemeModeData>(context).isDarkModeActive
+                  ? Icons.dark_mode
+                  : Icons.light_mode,
             ),
-            title: Text("Title"),
+            title: const Text("Title"),
             trailing: Switch(
-              value: isDarkModeActive,
+              value: Provider.of<ThemeModeData>(context).isDarkModeActive,
               onChanged: (bool value) {
-                changeTheme(value);
+                Provider.of<ThemeModeData>(context, listen: false).changeTheme(
+                  value ? ThemeMode.dark : ThemeMode.light,
+                );
               },
             ),
             onTap: () {
-              changeTheme(!isDarkModeActive);
+              Provider.of<ThemeModeData>(context, listen: false).changeTheme(
+                Provider.of<ThemeModeData>(context, listen: false).isDarkModeActive ? ThemeMode.light : ThemeMode.dark,
+              );
             },
           )
         ],

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:praktikum_state_mngmnt_2023/controller/task_data.dart';
+import 'package:provider/provider.dart';
 
-import '../model/task.dart';
+
 
 class AddTaskScreen extends StatelessWidget {
-  List<Task> tasks;
-
-  AddTaskScreen({super.key, required this.tasks});
-
+  const AddTaskScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<TaskData>(context);
     String newTaskTitle = "";
-
     return Container(
       color: const Color(0xff757575),
       child: Container(
@@ -45,12 +44,7 @@ class AddTaskScreen extends StatelessWidget {
                 backgroundColor: Colors.lightBlueAccent,
               ),
               onPressed: () {
-                tasks.add(
-                  Task(
-                    name: newTaskTitle,
-                    isDone: false,
-                  ),
-                );
+                provider.addTask(newTaskTitle);
                 Navigator.pop(context);
               },
               child: const Text(

@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:praktikum_state_mngmnt_2023/controller/task_data.dart';
+import 'package:praktikum_state_mngmnt_2023/controller/theme.dart';
 import 'package:praktikum_state_mngmnt_2023/screens/settings_screen.dart';
-
-import '../model/task.dart';
+import 'package:provider/provider.dart';
 import '../widgets/tasks_list.dart';
 import 'add_task_screen.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  State<TasksScreen> createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  final List<Task> _tasks = [
-    Task(name: 'Buy milk'),
-    Task(name: 'Buy eggs'),
-    Task(name: 'Buy bread'),
-  ];
+class TasksScreen extends StatelessWidget {
+  const TasksScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
+    return Scaffold(  
+      backgroundColor: Provider.of<ThemeModeData>(context).isDarkModeActive ? Colors.blueGrey : Colors.blue,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Provider.of<ThemeModeData>(context).isDarkModeActive ? Colors.blueGrey : Colors.blue,
         child: const Icon(Icons.add),
         onPressed: () {
           showModalBottomSheet(
@@ -32,9 +24,7 @@ class _TasksScreenState extends State<TasksScreen> {
               child: Container(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: AddTaskScreen(
-                  tasks: _tasks,
-                ),
+                child: const AddTaskScreen(),
               ),
             ),
           );
@@ -52,16 +42,16 @@ class _TasksScreenState extends State<TasksScreen> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      shape: CircleBorder(),
-                      padding: EdgeInsets.all(15.0)),
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(15.0)),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (_) => SettingsScreen(),
+                        builder: (_) => const SettingsScreen(),
                       ),
                     );
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.settings,
                     size: 30.0,
                     color: Colors.lightBlueAccent,
@@ -79,7 +69,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '${_tasks.length} Tasks',
+                  '${Provider.of<TaskData>(context).taskCount} Tasks',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -98,9 +88,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: TasksList(
-                tasks: _tasks,
-              ),
+              child: TasksList(),
             ),
           ),
         ],
